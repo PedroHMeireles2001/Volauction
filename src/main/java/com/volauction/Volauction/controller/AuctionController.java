@@ -38,7 +38,7 @@ public class AuctionController {
         Auction auction = repository.getReferenceById(id);
         return ResponseEntity.ok(new DTOAuction(auction));
     }
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteAuction(@PathVariable Long id){
         Auction auction = repository.getReferenceById(id);
         repository.delete(auction);
@@ -53,6 +53,7 @@ public class AuctionController {
 
         Auction auction = result.get();
         auction.edit(data);
+        repository.save(auction);
 
         return ResponseEntity.ok(new DTOAuction(auction));
     }

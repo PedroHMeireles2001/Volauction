@@ -1,11 +1,13 @@
 package com.volauction.Volauction.domain.auction;
 
+import com.volauction.Volauction.domain.proposal.Proposal;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,7 +21,8 @@ public class Auction {
     private BigDecimal initialPrice;
     @Embedded
     private Product product;
-
+    @OneToMany
+    private List<Proposal> proposals;
     public Auction(DTOAuctionCreate data) {
         this.product = new Product(data.product());
         this.initialPrice = new BigDecimal(data.initialPrice());
