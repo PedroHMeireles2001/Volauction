@@ -24,19 +24,19 @@ public class AuctionController {
         Auction auction = new Auction(data);
         repository.save(auction);
         URI location = uriBuilder.path("/auction/{id}").buildAndExpand(auction.getId()).toUri();
-        return ResponseEntity.created(location).body(auction);
+        return ResponseEntity.created(location).body(new DTOAuction(auction));
     }
     @GetMapping
-    public ResponseEntity<Page<DTOAuction>> pageable(@PageableDefault Pageable pageable){
+    public ResponseEntity<Page<DTOAuctionProposal>> pageable(@PageableDefault Pageable pageable){
         Page<Auction> result = repository.findAll(pageable);
-        Page<DTOAuction> page = result.map(DTOAuction::new);
+        Page<DTOAuctionProposal> page = result.map(DTOAuctionProposal::new);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getAuction(@PathVariable Long id){
         Auction auction = repository.getReferenceById(id);
-        return ResponseEntity.ok(new DTOAuction(auction));
+        return ResponseEntity.ok(new DTOAuctionProposal(auction));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteAuction(@PathVariable Long id){

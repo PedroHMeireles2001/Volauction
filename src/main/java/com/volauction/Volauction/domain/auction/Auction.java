@@ -21,7 +21,7 @@ public class Auction {
     private BigDecimal initialPrice;
     @Embedded
     private Product product;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Proposal> proposals;
     public Auction(DTOAuctionCreate data) {
         this.product = new Product(data.product());
